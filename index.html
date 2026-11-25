@@ -1,0 +1,435 @@
+&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;A'Macarons — Patisserie Francesa em Recife&lt;/title&gt;
+  &lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+  &lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;
+  &lt;link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Lato:wght@300;400;700&amp;display=swap" rel="stylesheet"&gt;
+  &lt;style&gt;
+    :root {
+      --blush: #F2D7D9;
+      --blush-dark: #D4A0A7;
+      --cream: #FFF8F0;
+      --cream-dark: #F5E6D8;
+      --gold: #C9A96E;
+      --gold-light: #E8D5A8;
+      --charcoal: #2D2D2D;
+      --text: #3A3A3A;
+      --text-light: #6B6B6B;
+      --white: #FFFFFF;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Lato', sans-serif;
+      color: var(--text);
+      background: var(--cream);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* Demo Disclaimer Banner */
+    .demo-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--charcoal);
+      text-align: center;
+      padding: 8px 16px;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .demo-banner span { opacity: 0.8; font-weight: 400; }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-top: 36px;
+    }
+    .hero img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      filter: brightness(0.7);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: var(--white);
+      max-width: 800px;
+      padding: 0 24px;
+    }
+    .hero-content h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 16px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+      letter-spacing: -1px;
+    }
+    .hero-content p {
+      font-size: clamp(1rem, 2vw, 1.35rem);
+      font-weight: 300;
+      max-width: 550px;
+      margin: 0 auto 32px;
+      opacity: 0.95;
+      text-shadow: 0 1px 10px rgba(0,0,0,0.3);
+    }
+    .hero-cta {
+      display: inline-block;
+      padding: 14px 40px;
+      background: var(--white);
+      color: var(--charcoal);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(0,0,0,0.3);
+      background: var(--blush);
+    }
+
+    /* Reveal Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 36px;
+      left: 0; right: 0;
+      z-index: 999;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 40px;
+      transition: background 0.3s ease;
+    }
+    nav.scrolled {
+      background: rgba(255,248,240,0.97);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+      transition: color 0.3s;
+    }
+    nav.scrolled .nav-logo { color: var(--charcoal); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--white);
+      transition: color 0.3s;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    nav.scrolled .nav-links a { color: var(--text); }
+    .nav-links a:hover { opacity: 0.7; }
+    .nav-cta {
+      padding: 10px 28px;
+      background: var(--white);
+      color: var(--charcoal) !important;
+      border-radius: 50px;
+      font-weight: 700 !important;
+      transition: all 0.3s ease;
+    }
+    nav.scrolled .nav-cta {
+      background: var(--charcoal);
+      color: var(--white) !important;
+    }
+
+    /* Sections */
+    section { padding: 100px 40px; }
+    .section-title {
+      text-align: center;
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 16px;
+    }
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-light);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 60px;
+      font-weight: 300;
+    }
+
+    /* About */
+    .about { background: var(--white); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+      align-items: center;
+    }
+    .about-img {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    }
+    .about-img img { width: 100%; display: block; }
+    .about-text h2 { font-size: 2.2rem; margin-bottom: 20px; }
+    .about-text p { color: var(--text-light); margin-bottom: 16px; }
+
+    /* Product Cards */
+    .products { background: var(--cream); }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 36px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .product-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    }
+    .product-card img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      display: block;
+    }
+    .card-body { padding: 28px; }
+    .card-body h3 { font-size: 1.5rem; margin-bottom: 12px; }
+    .card-body p { color: var(--text-light); font-size: 0.95rem; }
+
+    /* Instagram CTA */
+    .instagram-cta {
+      background: linear-gradient(135deg, #833AB4, #E1306C, #F77737);
+      color: var(--white);
+      text-align: center;
+      padding: 80px 40px;
+    }
+    .instagram-cta h2 {
+      color: var(--white);
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 16px;
+    }
+    .instagram-cta p {
+      font-size: 1.15rem;
+      opacity: 0.9;
+      margin-bottom: 32px;
+      font-weight: 300;
+    }
+    .ig-link {
+      display: inline-block;
+      padding: 16px 44px;
+      background: var(--white);
+      color: #E1306C;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .ig-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 48px 40px;
+    }
+    footer .disclaimer {
+      max-width: 700px;
+      margin: 0 auto 24px;
+      font-size: 0.85rem;
+      line-height: 1.8;
+      opacity: 0.7;
+    }
+    footer p { font-size: 0.85rem; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav { padding: 12px 20px; }
+      .nav-links { display: none; }
+      section { padding: 60px 20px; }
+      .about-grid { grid-template-columns: 1fr; gap: 30px; }
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- Demo Disclaimer Banner --&gt;
+  &lt;div class="demo-banner"&gt;
+    🔒 Demo Independente — Não é o site oficial da A'Macarons &lt;span&gt;| Conceito Visual&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Navigation --&gt;
+  &lt;nav id="navbar"&gt;
+    &lt;a href="#" class="nav-logo"&gt;A'Macarons&lt;/a&gt;
+    &lt;ul class="nav-links"&gt;
+      &lt;li&gt;&lt;a href="#sobre"&gt;Sobre&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#produtos"&gt;Produtos&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="proposta.html"&gt;Proposta&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="https://www.instagram.com/amacaronsoficial/" target="_blank" rel="noopener" class="nav-cta"&gt;Instagram&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+
+  &lt;!-- Hero Section --&gt;
+  &lt;section class="hero"&gt;
+    &lt;img src="https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&amp;fit=crop&amp;w=1920&amp;q=80" alt="Macarons franceses em tons pastel"&gt;
+    &lt;div class="hero-content reveal"&gt;
+      &lt;h1&gt;A'Macarons&lt;/h1&gt;
+      &lt;p&gt;A arte da pâtisserie francesa transplantada para o coração de Recife. Sabor que inspira, cada morango é uma história.&lt;/p&gt;
+      &lt;a href="#produtos" class="hero-cta"&gt;Conheça Nossas Delícias&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;!-- About Section --&gt;
+  &lt;section id="sobre" class="about"&gt;
+    &lt;div class="about-grid"&gt;
+      &lt;div class="about-img reveal"&gt;
+        &lt;img src="https://images.unsplash.com/photo-1612203985729-70726954388c?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Patisserie artesanal"&gt;
+      &lt;/div&gt;
+      &lt;div class="about-text reveal"&gt;
+        &lt;h2&gt;Uma Paixão que Vem da França&lt;/h2&gt;
+        &lt;p&gt;
+          Inspirada na tradição das pâtisseries parisienses, a A'Macarons traz para Recife
+          a delicadeza e a sofisticação da confeitaria francesa. Cada peça é pensada para
+          despertar sentidos e contar histórias através do sabor.
+        &lt;/p&gt;
+        &lt;p&gt;
+          Morangos frescos, chocolates selecionados, recheios artesanais — tudo feito com
+          amor e dedicação para momentos que merecem ser especiais.
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;!-- Products Section --&gt;
+  &lt;section id="produtos" class="products"&gt;
+    &lt;h2 class="section-title reveal"&gt;Nossas Criações&lt;/h2&gt;
+    &lt;p class="section-subtitle reveal"&gt;Cada produto é uma obra de arte comestível, feita com os melhores ingredientes&lt;/p&gt;
+    &lt;div class="cards-grid"&gt;
+      &lt;!-- Card 1: Macarons --&gt;
+      &lt;div class="product-card reveal"&gt;
+        &lt;img src="https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Macarons coloridos"&gt;
+        &lt;div class="card-body"&gt;
+          &lt;h3&gt;Macarons&lt;/h3&gt;
+          &lt;p&gt;
+            Delicados, crocantes por fora e macios por dentro. Nossos macarons são
+            preparados artesanalmente com sabores que vão da clássica baunilha
+            às criações exclusivas da casa.
+          &lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;!-- Card 2: Pâtisserie --&gt;
+      &lt;div class="product-card reveal"&gt;
+        &lt;img src="https://images.unsplash.com/photo-1486427944544-d2c246c4df14?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Pâtisserie francesa"&gt;
+        &lt;div class="card-body"&gt;
+          &lt;h3&gt;Pâtisserie&lt;/h3&gt;
+          &lt;p&gt;
+            Tortas, éclairs, mille-feuilles — a tradição francesa em cada detalhe.
+            Nossos doces são elaborados com ingredientes premium para momentos
+            verdadeiramente inesquecíveis.
+          &lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;!-- Card 3: Gifts --&gt;
+      &lt;div class="product-card reveal"&gt;
+        &lt;img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Caixa de presentes"&gt;
+        &lt;div class="card-body"&gt;
+          &lt;h3&gt;Presentes&lt;/h3&gt;
+          &lt;p&gt;
+            Caixas personalizadas com as criações mais elegantes para presentear
+            quem você ama. Cada conjunto é uma experiência de sabor e sofisticação
+            embalada com carinho.
+          &lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;!-- Instagram CTA --&gt;
+  &lt;section class="instagram-cta"&gt;
+    &lt;h2 class="reveal"&gt;Siga-nos no Instagram&lt;/h2&gt;
+    &lt;p class="reveal"&gt;Acompanhe nossas novidades, criações do dia a dia e bastidores da pâtisserie&lt;/p&gt;
+    &lt;a href="https://www.instagram.com/amacaronsoficial/" target="_blank" rel="noopener" class="ig-link reveal"&gt;
+      @amacaronsoficial
+    &lt;/a&gt;
+  &lt;/section&gt;
+
+  &lt;!-- Footer --&gt;
+  &lt;footer&gt;
+    &lt;p class="disclaimer"&gt;
+      Demonstração independente da KV AGENCY — não é o site oficial da A'Macarons.
+      Fotos ilustrativas.
+    &lt;/p&gt;
+    &lt;p&gt;© 2024 KV AGENCY — Conceito visual para fins demonstrativos&lt;/p&gt;
+  &lt;/footer&gt;
+
+  &lt;script&gt;
+    // Navbar scroll effect
+    const nav = document.getElementById('navbar');
+ window.addEventListener('scroll', () =&gt; {
+ av.classList.toggle('scrolled', window.scrollY &gt; 50);
+    });
+
+    // Reveal on scroll
+    const revealElements = document.querySelectorAll('.reveal');
+ const revealObserver = new IntersectionObserver((entries) =&gt; {
+ entries.forEach(entry =&gt; {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.15 });
+ revealElements.forEach(el =&gt; revealObserver.observe(el));
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
